@@ -634,7 +634,7 @@ contract Nigiri is IBEP20, Auth {
     }
 
     function setIsDividendExempt(address holder, bool exempt) external authorized {
-        require(holder != address(this) && holder != pair);
+        require(holder != address(this) && holder != pair && holder != DEAD && holder != ZERO);
         isDividendExempt[holder] = exempt;
         if(exempt){
             distributor.setShare(holder, 0);
