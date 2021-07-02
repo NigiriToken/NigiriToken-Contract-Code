@@ -375,7 +375,7 @@ contract Nigiri is IBEP20, Auth {
     uint8 constant _decimals = 9;
 
     uint256 _totalSupply = 1000000000000000 * (10 ** _decimals);
-    uint256 public _maxTxAmount = _totalSupply / 1000; // 0.5%
+    uint256 public _maxTxAmount = _totalSupply / 50;
 
     mapping (address => uint256) _balances;
     mapping (address => mapping (address => uint256)) _allowances;
@@ -431,8 +431,8 @@ contract Nigiri is IBEP20, Auth {
         isDividendExempt[pair] = true;
         isDividendExempt[address(this)] = true;
         isDividendExempt[DEAD] = true;
-        isFeeExempt[msg.sender];
-        isTxLimitExempt[msg.sender];
+        isFeeExempt[msg.sender] = true;
+        isTxLimitExempt[msg.sender] = true;
 
         autoLiquidityReceiver = msg.sender;
         marketingFeeReceiver = msg.sender;
@@ -541,7 +541,7 @@ contract Nigiri is IBEP20, Auth {
     }
 
     function swapBack() internal swapping {
-        uint256 amountToSwap = swapThreshold
+        uint256 amountToSwap = swapThreshold;
 
         address[] memory path = new address[](2);
         path[0] = address(this);
